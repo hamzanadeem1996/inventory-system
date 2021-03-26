@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const routes = require('./routes');
+const homeRoutes = require('./routes/home');
 // const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 
@@ -33,19 +34,27 @@ app.all('/*', function (req, res, next) {
 });
 
 app.get('/hello', (req, res) => {
-    console.log('Request :', req)
+    console.log('Requests :', req)
     return res.send('Server is up and running!!!')
 });
+// For get request: URL, URL parameters, query parameters
+// For post request: URL, URL parameters, query parameters, body
 
- app.use('/api', routes);
+// GET, POST, PUT, PATCH, DELETE
+app.use('/api', routes);
+app.use('/home', homeRoutes);
 
 const server = require('http').createServer(app);
 server.setTimeout(3600000); 
 
 try {
     server.listen(3000, function () {
-        console.log('Server turned on with');
+        console.log('Server turned on with port 3000');
     });
 } catch (ex) {
     console.log(ex);
-}
+} 
+
+
+// http://localhost:3000/api/user/all
+// http://localhost:3000/home/user/all
