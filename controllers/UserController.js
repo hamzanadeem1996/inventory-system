@@ -6,6 +6,8 @@ const globalUsers = [
     {id: 5, name: 'mehunisa', age: 25},
 ];
 
+var userProfile = {};
+
 exports.getAllUsers = (req, res) => {
     return res.status(200).json({message: 'success', users}).end()
 }
@@ -52,4 +54,19 @@ exports.getUserByName = (req, res) => {
     }
 
     return res.status(404).json({message: 'user not found'}).end()
+}
+
+exports.updateUserProfile = (req, res) => {
+    const { name, email } = req.body;
+
+    if (!name || !email) {
+        return res.status(400).send('Some required parameters are missing');
+    }
+
+    userProfile.name = name;
+    userProfile.email = email;
+
+    // What is Object().freeze() ?
+
+    return res.status(200).json({message: 'Success', user: userProfile}).end()
 }
